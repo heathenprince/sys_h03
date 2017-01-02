@@ -5,14 +5,14 @@
 #include <errno.h>
 #include <fcntl.h>
 
-int randInt() {
+unsigned randInt() {
   int fd = open( "/dev/random" , O_RDONLY );
   if( fd < 0 ) {
     printf( "%s\n" , strerror(errno) );
     exit(1);
   }
 
-  int* buff = (int*)malloc(sizeof(int));
+  unsigned* buff = (unsigned*)malloc(sizeof(unsigned));
   read( fd, buff, 4 ); // read 4 bytes from file tied to fd
   close(fd);
   return *buff;
@@ -20,14 +20,14 @@ int randInt() {
 
 void populateArray( int* arr ) {
  int c;
-  for( c = 0; c < 10; c++ ) { //populate
+  for( c = 0; c < 10; c++ ) { 
     arr[c] = randInt();
   }
 }
 
 void printArray( int* arr ) {
   int c;
-  for( c = 0; c < 10; c++ ) { //populate
+  for( c = 0; c < 10; c++ ) { 
     printf( "random %d: %d\n" , c , arr[c] );
   }
 }
@@ -51,11 +51,13 @@ int main() {
   close(wfd);
 
   //read from file to array
-  int* newAry[10];
   int rfd = open( "foo.txt", O_RDONLY );
   if( rfd < 0 ) { printf( "%s\n" , strerror(errno) ); }
+
+  unsigned* newAry[10];
   w = read( rfd, newAry, sizeof(randVals) );
   if( w < 0 ) { printf( "%s\n" , strerror(errno) ); }
+  
   close(rfd);
 
   printArray(randVals);
