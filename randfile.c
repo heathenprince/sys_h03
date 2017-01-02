@@ -12,27 +12,24 @@ int randInt() {
     exit(1);
   }
 
-  unsigned int* buff = (int*)malloc(sizeof(int));
+  int* buff = (int*)malloc(sizeof(int));
   read( fd, buff, 4 ); // read 4 bytes from file tied to fd
   close(fd);
-  return buff;
+  return *buff;
+}
+
+void populateArray( int* arr ) {
+ int c;
+  for( c = 0; c < 10; c++ ) { //populate
+    arr[c] = randInt();
+  }
 }
 
 void printArray( int* arr ) {
   int c;
-  for( c = 0; c < 10; c++ ) {
+  for( c = 0; c < 10; c++ ) { //populate
     printf( "random %d: %d\n" , c , arr[c] );
   }
-  printf( "\n" );
-}
-
-int* populateArray() {
-  int* arr[10];
-  int c;
-  for( c = 0; c < 10; c++ ) {
-    arr[c] = randInt();
-  }
-  return arr;
 }
 
 int main() {
@@ -40,8 +37,9 @@ int main() {
   
   int* randVals; // array holding random values
   printf("%s\n\n", "Populating array..." );
-  randVals = populateArray(); 
-
+  populateArray(randVals);
+  printArray(randVals);
+  
   //write array to file
   int wfd = open( "foo.txt", O_WRONLY | O_CREAT, 0666 ); // create and open hold
 
@@ -49,7 +47,7 @@ int main() {
     printf( "%s\n" , strerror(errno) );
     exit(1);
   }
-  write( wfd, randVals, sizeof(randVals) ); //write to hold from randVals*/
+  write( wfd, randVals, sizeof(randVals) ); //write to hold from randVals
   close(wfd);
 
   //read from file to array
@@ -62,9 +60,6 @@ int main() {
   
   read( rfd, newAry, sizeof(randVals) );
   close(rfd);
-  
-  printArray(randVals);  
-  printArray(newAry);
 
   return 0;
 }
