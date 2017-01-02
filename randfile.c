@@ -36,7 +36,7 @@ void printArray( unsigned* arr ) {
 int main() {
   //printf( "%d\n" , randInt() );
   
-  unsigned* randVals; // array holding random values
+  unsigned* randVals[10]; // array holding random values
   printf("%s\n\n", "Populating array..." );
   populateArray(randVals);
   
