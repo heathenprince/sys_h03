@@ -33,6 +33,9 @@ void printArray( unsigned* arr ) {
   printf("\n");
 }
 
+
+  
+
 int main() {
   //printf( "%d\n" , randInt() );
   
@@ -62,6 +65,14 @@ int main() {
 
   printArray(randVals);
   printArray(newAry);
-  
+
+  //compare
+  int c;
+  for( c = 0; c < 10; c++ ) {
+    if( randVals[c] != newAry[c] ) {
+      printf("bad\n");
+    }
+  }
+  printf( "arrays match!\n" );
   return 0;
 }
