@@ -1,19 +1,19 @@
-default:
-	make comp
-	make run
-	make clean
+GCC = gcc
 
-comp: randfile.o
-	gcc randfile.o -o randfile
+rantest: randfile.c
+	$(GCC) randfile.c -o rantest
 
-randfile.o: 
-	gcc -c randfile.c
+run: rantest
+	./rantest
+
 
 clean:
-	rm randfile
+	rm rantest
 	rm foo.txt
-	rm *.o
+	rm *.out
 	rm *~
 
-run:
-	./randfile
+all:
+	make rantest
+	make run
+	make clean
