@@ -38,28 +38,28 @@ int main() {
   int* randVals; // array holding random values
   printf("%s\n\n", "Populating array..." );
   populateArray(randVals);
-  printArray(randVals);
   
   //write array to file
   int wfd = open( "foo.txt", O_WRONLY | O_CREAT, 0666 ); // create and open hold
+  
+  if( wfd < 0 ) {  printf( "%s\n" , strerror(errno) ); }
 
-   if( wfd < 0 ) { //check
-    printf( "%s\n" , strerror(errno) );
-    exit(1);
-  }
-  write( wfd, randVals, sizeof(randVals) ); //write to hold from randVals
+  int w;
+  w = write( wfd, randVals, sizeof(randVals) ); //write to hold from randVals
+  if( w < 0 ) { printf( "%s\n" , strerror(errno) ); }
+  
   close(wfd);
 
   //read from file to array
   int* newAry[10];
   int rfd = open( "foo.txt", O_RDONLY );
-  if( rfd < 0 ) { //check
-    printf( "%s\n" , strerror(errno) );
-    exit(1);
-  }
-  
-  read( rfd, newAry, sizeof(randVals) );
+  if( rfd < 0 ) { printf( "%s\n" , strerror(errno) ); }
+  w = read( rfd, newAry, sizeof(randVals) );
+  if( w < 0 ) { printf( "%s\n" , strerror(errno) ); }
   close(rfd);
 
+  printArray(randVals);
+  printArray(newAry);
+  
   return 0;
 }
